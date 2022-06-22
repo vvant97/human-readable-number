@@ -20,25 +20,19 @@ module.exports = function toReadable (number) {
   while (i < valueStringLength) {
 
     if (number < 10) {
-      result += `${units[valueFirstIndex]}`;
-      return result.trim();
+      return `${units[valueFirstIndex]}`;
     } else if (number > 9 && number < 20) {
-      result += `${dozen[valueLastIndex]}`;
-      return result.trim();
+      return `${dozen[valueLastIndex]}`;
     } else if (number > 19 && number < 100) {
-      result += `${dozens[valueFirstIndex - 2]} ${units[valueLastIndex].replace('zero', '')}`;
-      return result.trim();
+      return `${dozens[valueFirstIndex - 2]} ${units[valueLastIndex].replace('zero', '')}`.trim();
     } else if (number > 99 && number < 1000 && valueSecondIndex < 1 && valueLastIndex >= 0) {
-      result += `${hundreds[valueFirstIndex - 1]} ${units[valueLastIndex].replace('zero', '')}`;
-      return result.trim();
+      return `${hundreds[valueFirstIndex - 1]} ${units[valueLastIndex].replace('zero', '')}`.trim();
     } else if (number > 99 && number < 1000 && valueSecondIndex >= 1 && valueSecondIndex < 2) {
-      result += `${hundreds[valueFirstIndex - 1]} ${dozen[valueLastIndex]}`;
-      return result.trim();
+      return `${hundreds[valueFirstIndex - 1]} ${dozen[valueLastIndex]}`;
     } else if (number > 99 && number < 1000 && valueSecondIndex >= 2) {
-      result += `${hundreds[valueFirstIndex - 1]} ${dozens[valueSecondIndex - 2]} ${units[valueLastIndex].replace('zero', '')}`;
-      return result.trim();
+      return `${hundreds[valueFirstIndex - 1]} ${dozens[valueSecondIndex - 2]} ${units[valueLastIndex].replace('zero', '')}`.trim();
     } else {
-      return result.trim();
+      return result;
     }
 
   }
