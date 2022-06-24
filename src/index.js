@@ -13,22 +13,30 @@ module.exports = function toReadable (number) {
   const valueSecondIndex = valueToString[valueStringLength - 2];
   const valueLastIndex = valueToString[valueStringLength - 1];
 
+  const conditionOfUnits = (number > 0 && number < 10);
+  const conditionOfDozen = (number > 9 && number < 20);
+  const conditionOfDozens = (number > 19 && number < 100);
+  const conditionOfUnitsInHundreds = (valueSecondIndex < 1 && valueLastIndex >= 0);
+  const conditionOfDozenInHundreds = (valueSecondIndex >= 1 && valueSecondIndex < 2);
+  const conditionOfDozensInHundreds = (valueSecondIndex >= 2);
+  const conditionOfZero = (number === 0 ? 'zero' : false);
+
   let result = '';
 
-  if (number > 0 && number < 10) {
+  if (conditionOfUnits) {
     result = `${units[valueFirstIndex]}`;
-  } else if (number > 9 && number < 20) {
+  } else if (conditionOfDozen) {
     result = `${dozen[valueLastIndex]}`;
-  } else if (number > 19 && number < 100) {
+  } else if (conditionOfDozens) {
     result = `${dozens[valueFirstIndex - 2]} ${units[valueLastIndex]}`;
-  } else if (valueSecondIndex < 1 && valueLastIndex >= 0) {
+  } else if (conditionOfUnitsInHundreds) {
     result = `${hundreds[valueFirstIndex - 1]} ${units[valueLastIndex]}`;
-  } else if (valueSecondIndex >= 1 && valueSecondIndex < 2) {
+  } else if (conditionOfDozenInHundreds) {
     result = `${hundreds[valueFirstIndex - 1]} ${dozen[valueLastIndex]}`;
-  } else if (valueSecondIndex >= 2) {
+  } else if (conditionOfDozensInHundreds) {
     result = `${hundreds[valueFirstIndex - 1]} ${dozens[valueSecondIndex - 2]} ${units[valueLastIndex]}`;
   } else {
-    result = number === 0 ? 'zero' : false;
+    result = conditionOfZero;
   }
 
   return result.trim();
